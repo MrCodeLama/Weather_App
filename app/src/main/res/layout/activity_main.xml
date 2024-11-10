@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -22,7 +21,7 @@
             android:fontFamily="@font/helvatica"
             android:text="LONDON"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+            android:textColor="@color/city"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -36,21 +35,21 @@
             android:fontFamily="@font/opensans"
             android:text="FRI, JUN 26"
             android:textAllCaps="true"
-            android:textColor="@color/gray"
+            android:textColor="@color/city"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/id_weatherImage"
             android:layout_width="200dp"
-            android:layout_height="150dp"
+            android:layout_height="170dp"
             android:layout_below="@id/id_time"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:alpha="0.6"
+            android:alpha="0.4"
             android:padding="10dp"
-            android:src="@drawable/w03d" />
+            android:src="@drawable/w13d" />
 
         <TextView
             android:id="@+id/id_degree"
@@ -93,6 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/id_main"
             android:layout_marginTop="30dp"
+            android:padding="10dp"
             android:background="@color/background"
             android:orientation="horizontal"
             android:weightSum="3">
@@ -109,7 +109,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/opensansbold"
                     android:text="Humidity"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -120,7 +120,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/opensansbold"
                     android:text="94%"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -128,6 +128,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -137,7 +138,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/opensansbold"
                     android:text="Wind"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -148,7 +149,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/opensansbold"
                     android:text="3 km/h"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -165,7 +166,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/opensansbold"
                     android:text="Feels like"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -176,7 +177,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/opensansbold"
                     android:text="19°"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -188,7 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/id_weatherDetails"
             android:layout_marginTop="30dp"
-            android:background="@color/backgroundforecast"
+            android:background="@color/background"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -206,7 +207,7 @@
                     android:paddingLeft="40dp"
                     android:paddingTop="10dp"
                     android:text="Fri, Jun 26"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -219,7 +220,7 @@
                     android:paddingLeft="30dp"
                     android:paddingTop="10dp"
                     android:text="28°"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -238,7 +239,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/id_forecastLayout1"
-            android:background="@color/backgroundforecast"
+            android:background="@color/background"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -256,7 +257,7 @@
                     android:paddingLeft="40dp"
                     android:paddingTop="10dp"
                     android:text="Sat, Jun 27"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -269,7 +270,7 @@
                     android:paddingLeft="30dp"
                     android:paddingTop="10dp"
                     android:text="29°"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -279,7 +280,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:padding="10dp"
-                    android:src="@drawable/w01d" />
+                    android:src="@drawable/w02d" />
 
             </LinearLayout>
         </LinearLayout>
@@ -289,7 +290,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/id_forecastLayout2"
-            android:background="@color/backgroundforecast"
+            android:background="@color/background"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -307,7 +308,7 @@
                     android:paddingLeft="40dp"
                     android:paddingTop="10dp"
                     android:text="Sun, Jun 28"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -321,7 +322,7 @@
                     android:paddingLeft="30dp"
                     android:paddingTop="10dp"
                     android:text="31°"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -331,7 +332,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:padding="10dp"
-                    android:src="@drawable/w01d" />
+                    android:src="@drawable/w13d" />
 
             </LinearLayout>
 
@@ -342,7 +343,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/id_forecastLayout3"
-            android:background="@color/backgroundforecast"
+            android:background="@color/background"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -360,7 +361,7 @@
                     android:paddingLeft="40dp"
                     android:paddingTop="10dp"
                     android:text="Mon, Jun 29"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
@@ -372,7 +373,7 @@
                     android:paddingLeft="30dp"
                     android:paddingTop="10dp"
                     android:text="19°"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -395,7 +396,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/id_forecastLayout4"
-            android:background="@color/backgroundforecast"
+            android:background="@color/background"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -413,7 +414,7 @@
                     android:paddingLeft="40dp"
                     android:paddingTop="10dp"
                     android:text="Tue, Jun 30"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -426,7 +427,7 @@
                     android:paddingLeft="30dp"
                     android:paddingTop="10dp"
                     android:text="16°"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -436,7 +437,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:padding="10dp"
-                    android:src="@drawable/w11d" />
+                    android:src="@drawable/w01d" />
 
 
             </LinearLayout>
