@@ -26,7 +26,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/id_time"
+            android:id="@+id/id_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/id_city"
@@ -43,7 +43,7 @@
             android:id="@+id/id_weatherImage"
             android:layout_width="200dp"
             android:layout_height="170dp"
-            android:layout_below="@id/id_time"
+            android:layout_below="@id/id_date"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
@@ -72,7 +72,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/id_main"
+            android:id="@+id/id_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/id_degree"
@@ -90,10 +90,10 @@
             android:id="@+id/id_weatherDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/id_main"
-            android:layout_marginTop="30dp"
+            android:layout_below="@id/id_weather"
+            android:layout_margin="16dp"
             android:padding="10dp"
-            android:background="@color/background"
+            android:background="@drawable/background1"
             android:orientation="horizontal"
             android:weightSum="3">
 
@@ -181,16 +181,19 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginBottom="3dp"
             android:id="@+id/id_forecastLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/id_weatherDetails"
             android:layout_marginTop="30dp"
-            android:background="@color/background"
+            android:background="@drawable/background1"
             android:orientation="horizontal"
+            android:layout_marginHorizontal="16dp"
             android:padding="10dp"
             android:weightSum="3">
 
@@ -200,6 +203,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastDay1"
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
@@ -212,6 +216,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastTemp1"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -225,6 +230,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastIcon1"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -235,11 +241,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginVertical="3dp"
             android:id="@+id/id_forecastLayout2"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="16dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/id_forecastLayout1"
-            android:background="@color/background"
+            android:background="@drawable/background1"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -250,6 +258,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastDay2"
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
@@ -262,6 +271,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastTemp2"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -275,6 +285,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastIcon2"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -286,11 +297,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginVertical="3dp"
             android:id="@+id/id_forecastLayout3"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="16dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/id_forecastLayout2"
-            android:background="@color/background"
+            android:background="@drawable/background1"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -301,6 +314,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastDay3"
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
@@ -314,6 +328,7 @@
 
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastTemp3"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -327,6 +342,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastIcon3"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -339,11 +355,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginVertical="3dp"
             android:id="@+id/id_forecastLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_below="@id/id_forecastLayout3"
-            android:background="@color/background"
+            android:background="@drawable/background1"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -354,6 +372,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastDay4"
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
@@ -365,6 +384,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastTemp4"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -378,6 +398,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastIcon4"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -395,8 +416,10 @@
             android:id="@+id/id_forecastLayout5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="3dp"
             android:layout_below="@id/id_forecastLayout4"
-            android:background="@color/background"
+            android:background="@drawable/background1"
             android:orientation="horizontal"
             android:padding="10dp"
             android:weightSum="3">
@@ -407,6 +430,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastDay5"
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
@@ -419,6 +443,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastTemp5"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -432,6 +457,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:layout_weight="0.33"
                     android:id="@+id/id_forecastIcon5"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
