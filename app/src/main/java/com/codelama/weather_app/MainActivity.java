@@ -3,11 +3,16 @@ package com.codelama.weather_app;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +38,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
     TextView city,temp,weather,humidity,wind,realFeel,date;
     ImageView weatherImage;
     private FusedLocationProviderClient client;
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     double longitude=Math.round(location.getLongitude() * 100.0)/100.0;
                     longtitude = String.valueOf(longitude);
 
-                    getWeather(latitude,longtitude);
+                    getWeatherByLatLon(latitude,longtitude);
                 } else {
                     Toast.makeText(MainActivity.this, "Unable to access your location", Toast.LENGTH_SHORT).show();
                 }
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                                     double lon=Math.round(location.getLongitude() * 100.0)/100.0;
                                     longtitude= String.valueOf(lon);
 
-                                    getWeather(latitude,longtitude);
+                                    getWeatherByLatLon(latitude,longtitude);
                                 }
                             }
                         });
@@ -117,7 +122,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getWeather(String lat,String lon){
+    private void getWeatherByCityName(String city){
+        OkHttpClient client=new OkHttpClient();
+        Request request=new Request.Builder()
+                .url("https://api.openweathermap.org/data/2.5/forecast?q="+city+"&appid="+api_id+"&units=metric")
+                .get().build();
+        StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        try {
+            Response response=client.newCall(request).execute();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    String data=response.body().string();
+                    try {
+
+                        JSONObject json=new JSONObject(data);
+                        JSONObject city=json.getJSONObject("city");
+                        JSONObject coord=city.getJSONObject("coord");
+                        String lat =coord.getString("lat");
+                        String lon=coord.getString("lon");
+
+                        getWeatherByLatLon(lat,lon);
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void getWeatherByLatLon(String lat,String lon){
         OkHttpClient client=new OkHttpClient();
         Request request=new Request.Builder()
                 .url("https://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&appid="+api_id+"&units=metric")
@@ -331,6 +374,43 @@ public class MainActivity extends AppCompatActivity {
 
                 indexforecast=i+1;
                 return;
+            }
+        }
+    }
+
+    public void showPopup(View v){
+        PopupMenu popup=new PopupMenu(this,v);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.popup);
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int temp_if = item.getItemId();
+        if(temp_if == R.id.id_currentLocation) {
+            getWeatherByLatLon(latitude, longtitude);
+            return true;
+        } else if (temp_if == R.id.id_otherCity) {
+            Intent intent=new Intent(MainActivity.this,City.class);
+            startActivityForResult(intent,1);
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                String citySearched = data.getStringExtra("result");
+                getWeatherByCityName(citySearched);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
             }
         }
     }
