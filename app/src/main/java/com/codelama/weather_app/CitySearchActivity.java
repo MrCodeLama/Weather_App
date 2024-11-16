@@ -8,11 +8,11 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class City extends AppCompatActivity {
+public class CitySearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city);
+        setContentView(R.layout.activity_city_search);
 
         final Button button=findViewById(R.id.id_button);
 
