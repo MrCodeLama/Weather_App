@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -53,15 +54,16 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public FusedLocationProviderClient client;
     static int indexforecast=5;
     static String latitude;
-    static String longtitude;
+    static String longitude;
     private String api_id = "818c99e38ef923e289462d13503c0aa9";
     private boolean useLocation = true;
     private String cityName = new String();
-
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences("WeatherAppPrefs", MODE_PRIVATE);
 
         setContentView(R.layout.activity_main);
         city = findViewById(R.id.id_city);
@@ -80,6 +82,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void run() {
                 updateLocation();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("latitude", latitude);
+                editor.putString("longitude", longitude);
+                editor.putString("cityName", cityName);
+                editor.apply();
 
                 // Repeat the task
                 handler.postDelayed(this, 1000);
@@ -87,6 +94,18 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }, 60*60*1000);
 
     }
+
+    private void updateWidget(String temperature, String weatherIconCode) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        ComponentName thisWidget = new ComponentName(this, Widget.class);
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget);
+
+        remoteViews.setTextViewText(R.id.widget_temperature, temperature);
+        remoteViews.setImageViewResource(R.id.widget_weather_icon, getWeatherIconResource(weatherIconCode));
+
+        appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+    }
+
 
     public void updateLocation() {
         if(useLocation) {
@@ -108,9 +127,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         latitude = String.valueOf(lat);
 
                         double lon=Math.round(location.getLongitude() * 100.0)/100.0;
-                        longtitude = String.valueOf(lon);
+                        longitude = String.valueOf(lon);
 
-                        getWeather(latitude,longtitude);
+                        getWeather(latitude,longitude);
                     } else {
                         Toast.makeText(MainActivity.this, "Unable to access your location", Toast.LENGTH_SHORT).show();
                     }
@@ -139,9 +158,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                                     latitude= String.valueOf(lat);
 
                                     double lon=Math.round(location.getLongitude() * 100.0)/100.0;
-                                    longtitude= String.valueOf(lon);
+                                    longitude= String.valueOf(lon);
 
-                                    getWeather(latitude,longtitude);
+                                    getWeather(latitude,longitude);
                                 }
                             }
                         });
@@ -196,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             JSONObject CityObject=json.getJSONObject("city");
             String City=CityObject.getString("name");
 
+            updateWidget(Temp, icons);
+
             setDataText(city,City);
             setDataText(temp,Temp);
             setDataImage(weatherImage,icons);
@@ -211,7 +232,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
     private void getWeather(String... params) {
-        Toast.makeText(this, "Weather updated", Toast.LENGTH_SHORT).show();
         String url;
         if (params.length == 1) {
             url = "https://api.openweathermap.org/data/2.5/forecast?q=" + params[0] + "&appid=" + api_id + "&units=metric";
@@ -312,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private int getWeatherIconResource(String iconCode) {
-        // Map the icon codes to drawable resources
+
         switch (iconCode) {
             case "01d":
                 return R.drawable.w01d;
@@ -347,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case "13n":
                 return R.drawable.w13d;
             default:
-                return R.drawable.w01d;  // Default icon if no match found
+                return R.drawable.w01d;
         }
     }
 
@@ -438,7 +458,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         int temp_if = item.getItemId();
         if(temp_if == R.id.id_currentLocation) {
             useLocation = true;
-            getWeather(latitude, longtitude);
+            getWeather(latitude, longitude);
             return true;
         } else if (temp_if == R.id.id_otherCity) {
             useLocation = false;

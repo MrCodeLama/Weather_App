@@ -38,10 +38,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CitySearchActivity" />
-
-        <receiver
-            android:name=".LocationService"
-            android:enabled="true" />
     </application>
 
 </manifest>
