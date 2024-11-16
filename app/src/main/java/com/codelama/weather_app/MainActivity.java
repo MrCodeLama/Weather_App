@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences("WeatherAppPrefs", MODE_PRIVATE);
+
+        sharedPreferences = getSharedPreferences("WeatherAppPrefs", MODE_PRIVATE);
 
         setContentView(R.layout.activity_main);
         city = findViewById(R.id.id_city);
@@ -73,8 +74,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         wind = findViewById(R.id.id_wind);
         realFeel = findViewById(R.id.id_realfeel);
         weatherImage = findViewById(R.id.id_weatherImage);
-        client = LocationServices.getFusedLocationProviderClient(this);
         date=findViewById(R.id.id_date);
+
+        client = LocationServices.getFusedLocationProviderClient(this);
+
+        latitude = sharedPreferences.getString("latitude", "0");
+        longitude = sharedPreferences.getString("longitude", "0");
+        cityName = sharedPreferences.getString("cityName", "London");
+        useLocation = sharedPreferences.getBoolean("useLocation", true);
 
         updateLocation();
 
@@ -82,13 +89,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void run() {
                 updateLocation();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("latitude", latitude);
-                editor.putString("longitude", longitude);
-                editor.putString("cityName", cityName);
-                editor.apply();
-
-                // Repeat the task
                 handler.postDelayed(this, 1000);
             }
         }, 60*60*1000);
@@ -108,6 +108,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
     public void updateLocation() {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("latitude", latitude);
+        editor.putString("longitude", longitude);
+        editor.putString("cityName", cityName);
+        editor.putBoolean("useLocation", useLocation);
+        editor.apply();
+
         if(useLocation) {
             if (ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
                 if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, ACCESS_FINE_LOCATION)){
@@ -175,8 +183,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     public void updateUI(String data) {
         try {
-
-
             JSONObject json=new JSONObject(data);
             TextView[] forecast = new TextView[5];
             TextView[] forecastTemp=new TextView[5];
@@ -224,12 +230,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             setDataText(humidity,hum);
             setDataText(realFeel,feelsValue);
             setDataText(wind,windValue);
-        }catch (JSONException e){
+
+        } catch (JSONException e){
             e.printStackTrace();
         }
     }
-
-
 
     private void getWeather(String... params) {
         String url;
@@ -275,64 +280,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                switch (value){
-                    case "01d":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w01d));
-                        break;
-                    case "01n":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w01d));
-                        break;
-                    case "02d":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w02d));
-                        break;
-                    case "02n":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w02d));
-                        break;
-                    case "03d":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w03d));
-                        break;
-                    case "03n":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w03d));
-                        break;
-                    case "04d":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w04d));
-                        break;
-                    case "04n":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w04d));
-                        break;
-                    case "09d":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w09d));
-                        break;
-                    case "09n":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w09d));
-                        break;
-                    case "10d":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w10d));
-                        break;
-                    case "10n":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w10d));
-                        break;
-                    case "11d":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w11d));
-                        break;
-                    case "11n":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w11d));
-                        break;
-                    case "13d":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w13d));
-                        break;
-                    case "13n":
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w13d));
-                        break;
-                    default:
-                        ImageView.setImageDrawable(getResources().getDrawable(R.drawable.w01d));
-                }
+                ImageView.setImageDrawable(getResources().getDrawable(getWeatherIconResource(value)));
             }
         });
     }
 
     private int getWeatherIconResource(String iconCode) {
-
         switch (iconCode) {
             case "01d":
                 return R.drawable.w01d;
@@ -387,7 +340,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         forecastIcons[2]=findViewById(R.id.id_forecastIcon3);
         forecastIcons[3]=findViewById(R.id.id_forecastIcon4);
         forecastIcons[4]=findViewById(R.id.id_forecastIcon5);
-
     }
 
     private void forecastCal(TextView forecast,TextView forecastTemp,ImageView forecastIcons,int index,JSONObject json) throws JSONException {
@@ -428,7 +380,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 String date=forecastDateSplit[0]+", "+forecastDateSplit[1] +" "+forecastDateSplit[2];
                 setDataText(forecast, date);
 
-
                 JSONObject Main=object.getJSONObject("main");
                 double temparature=Main.getDouble("temp");
                 String Temp=Math.round(temparature)+"°";
@@ -438,7 +389,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 JSONObject object1=array.getJSONObject(0);
                 String icons=object1.getString("icon");
                 setDataImage(forecastIcons,icons);
-
 
                 indexforecast=i+1;
                 return;
@@ -458,7 +408,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         int temp_if = item.getItemId();
         if(temp_if == R.id.id_currentLocation) {
             useLocation = true;
-            getWeather(latitude, longitude);
+            updateLocation();
             return true;
         } else if (temp_if == R.id.id_otherCity) {
             useLocation = false;
@@ -482,7 +432,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 updateLocation();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                useLocation = true;
                 updateLocation();
             }
         }
